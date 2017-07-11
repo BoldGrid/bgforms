@@ -167,6 +167,8 @@ class Wpforms {
 
 		$title = esc_html( sanitize_text_field( json_decode( $json )->settings->form_title ) );
 
+		$this->register_cpt();
+
 		// If the form already exists, then just return the form/post id.
 		if ( ( $form_id = $this->get_id_by_title( $title ) ) ) {
 			return $form_id;
@@ -308,5 +310,36 @@ class Wpforms {
 		}
 
 		return $post;
+	}
+
+	/**
+	 * Registers the custom post type to be used for forms.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return null
+	 */
+	public function register_cpt() {
+		if ( post_type_exists( 'wpforms' ) ) {
+			return;
+		}
+
+		// Custom post type arguments, which can be filtered if needed.
+		$args = apply_filters( 'wpforms_post_type_args',
+			array(
+				'labels'              => array(),
+				'public'              => false,
+				'exclude_from_search' => true,
+				'show_ui'             => false,
+				'show_in_admin_bar'   => false,
+				'rewrite'             => false,
+				'query_var'           => false,
+				'can_export'          => false,
+				'supports'            => array( 'title' ),
+			)
+		);
+
+		// Register the post type
+		register_post_type( 'wpforms', $args );
 	}
 }
