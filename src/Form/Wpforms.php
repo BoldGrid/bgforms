@@ -90,8 +90,6 @@ class Wpforms {
 	 * @since 1.0.0
 	 *
 	 * @see \Boldgrid\Library\Library\Configs::get()
-	 * @see \Boldgrid\Library\Library\Api\Call()
-	 * @see \Boldgrid\Library\Library\Api\Call::getResponse()
 	 *
 	 * @access private
 	 */
@@ -104,10 +102,10 @@ class Wpforms {
 
 		$url = \Boldgrid\Library\Library\Configs::get( 'api' ) . '/v1/forms';
 
-		$api = new \Boldgrid\Library\Library\Api\Call( $url, array( 'method' => 'GET' ) );
+		$response = wp_remote_get( $url );
 
-		if ( ( $response = $api->getResponse() ) ) {
-			$this->forms = json_decode( json_encode( $response ), true );
+		if ( ! is_wp_error( $response ) ) {
+			$this->forms = json_decode( $response['body'], true );
 		}
 
 		set_site_transient( 'boldgrid_wpforms' , $this->forms, 43200 );
