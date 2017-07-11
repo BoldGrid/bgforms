@@ -19,11 +19,29 @@ class Wpforms {
 	/**
 	 * WPForms package download URL address.
 	 *
-	 * @sinec 1.0.0
+	 * @since 1.0.0
+	 *
+	 * @access private
 	 *
 	 * @var string
 	 */
 	private $package_url = 'https://downloads.wordpress.org/plugin/wpforms-lite.zip';
+
+	/**
+	 * Plugin titles to match.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @staticvar array
+	 */
+	public static $match_names = array(
+			'WPForms Ultimate',
+			'WPForms Pro',
+			'WPForms Plus',
+			'WPForms Basic',
+			'WPForms',
+			'WPForms Lite',
+		);
 
 	/**
 	 * BoldGrid WPForms forms.
@@ -82,15 +100,17 @@ class Wpforms {
 			return $this->forms;
 		}
 
-		$url = \Boldgrid\Library\Library\Configs::get( 'api' ) . '/api/open/get-wpf-forms';
+		$this->forms = array();
+
+		$url = \Boldgrid\Library\Library\Configs::get( 'api' ) . '/api/form/get-wpf-forms';
 
 		$api = new \Boldgrid\Library\Library\Api\Call( $url );
 
 		if ( ( $response = $api->getResponse() ) ) {
-			$this->forms = json_decode( json_encode( $response->result->data ), true );
-
-			set_site_transient( 'boldgrid_wpforms' , $this->forms, 43200 );
+			$this->forms = json_decode( json_encode( $response ), true );
 		}
+
+		set_site_transient( 'boldgrid_wpforms' , $this->forms, 43200 );
 	}
 
 	/**
@@ -262,5 +282,31 @@ class Wpforms {
 		}
 
 		return true === $result;
+	}
+
+	/**
+	 * Convert Ninja Forms shortcodes into WPForms shortcodes for BoldGrid-deployed pages.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @see \Boldgrid\Library\Form\Wpforms\get_post_id()
+	 *
+	 * @param array $post WP post array.
+	 * @return array
+	 */
+	public function convert_nf_shortcodes( array $post ) {
+		preg_match_all( '/\[ninja_forms id="(\d+)"\]/', $post['post_content'], $matches );
+
+		foreach( $matches[1] as $form_id ) {
+			$post_id = $this->get_post_id( $form_id );
+
+			$post['post_content'] = str_replace(
+				'[ninja_forms id="' . $form_id . '"]',
+				'[wpforms id="' . $post_id . '"]',
+				$post['post_content']
+			);
+		}
+
+		return $post;
 	}
 }

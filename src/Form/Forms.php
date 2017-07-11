@@ -23,9 +23,11 @@ class Forms {
 	 */
 	public function __construct() {
 	if ( ! $this->get_ninjaforms_slug() ) {
+		$wpforms = new Wpforms();
+
 		// Add a filter for converting Ninja Forms into WPForms shortcodes.
 		add_filter( 'boldgrid_deployment_pre_insert_post', array(
-			$this, 'convert_nf_shortcodes',
+			$wpforms, 'convert_nf_shortcodes',
 		) );
 	}
 	}
@@ -74,20 +76,12 @@ class Forms {
 	 * @since 1.0.0
 	 *
 	 * @see \Boldgrid\Library\Form\Forms::get_plugin_slug()
+	 * @uses Wpforms::$match_names
 	 *
 	 * @return string
 	 */
 	public function get_wpforms_slug() {
-		$match_names = array(
-			'WPForms Ultimate',
-			'WPForms Pro',
-			'WPForms Plus',
-			'WPForms Basic',
-			'WPForms',
-			'WPForms Lite',
-		);
-
-		return $this->get_plugin_slug( $match_names );
+		return $this->get_plugin_slug( Wpforms::$match_names );
 	}
 
 	/**
@@ -178,34 +172,6 @@ class Forms {
 		}
 
 		return $result;
-	}
-
-	/**
-	 * Convert Ninja Forms shortcodes into WPForms shortcodes for BoldGrid-deployed pages.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @see \Boldgrid\Library\Form\Wpforms\get_post_id()
-	 *
-	 * @param array $post WP post array.
-	 * @return array
-	 */
-	public function convert_nf_shortcodes( array $post ) {
-		$wpforms = new Wpforms();
-
-		preg_match_all( '/\[ninja_forms id="(\d+)"\]/', $post['post_content'], $matches );
-
-		foreach( $matches[1] as $form_id ) {
-			$post_id = $wpforms->get_post_id( $form_id );
-
-			$post['post_content'] = str_replace(
-				'[ninja_forms id="' . $form_id . '"]',
-				'[wpforms id="' . $post_id . '"]',
-				$post['post_content']
-			);
-		}
-
-		return $post;
 	}
 
 	/**
