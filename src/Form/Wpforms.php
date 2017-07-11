@@ -102,9 +102,9 @@ class Wpforms {
 
 		$this->forms = array();
 
-		$url = \Boldgrid\Library\Library\Configs::get( 'api' ) . '/api/form/get-wpf-forms';
+		$url = \Boldgrid\Library\Library\Configs::get( 'api' ) . '/v1/forms';
 
-		$api = new \Boldgrid\Library\Library\Api\Call( $url );
+		$api = new \Boldgrid\Library\Library\Api\Call( $url, array( 'method' => 'GET' ) );
 
 		if ( ( $response = $api->getResponse() ) ) {
 			$this->forms = json_decode( json_encode( $response ), true );
