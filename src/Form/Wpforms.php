@@ -278,7 +278,7 @@ class Wpforms {
 		$result = $upgrader->install( $this->package_url );
 
 		if ( empty( $upgrader->skin->result ) || is_wp_error( $upgrader->skin->result ) ) {
-				return false;;
+			return false;
 		}
 
 		return true === $result;
