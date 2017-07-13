@@ -98,6 +98,8 @@ class Forms {
 		( $slug = $this->get_wpforms_slug() ) ||
 			( $slug = $this->get_ninjaforms_slug() );
 
+		$slug = apply_filters( 'boldgrid_form_preferred_slug', $slug );
+
 		return $slug;
 	}
 
