@@ -153,10 +153,6 @@ class Wpforms {
 	 * @return int          A post id for the form (which is also the WPForms form id).
 	 */
 	public function import_form( $form_id ) {
-		if ( ! current_user_can( apply_filters( 'wpforms_manage_cap', 'manage_options' ) ) ) {
-			return false;
-		}
-
 		$json = $this->get_form( $form_id );
 
 		if ( empty( $json ) ) {
@@ -278,7 +274,7 @@ class Wpforms {
 		$result = $upgrader->install( $this->package_url );
 
 		if ( empty( $upgrader->skin->result ) || is_wp_error( $upgrader->skin->result ) ) {
-			return false;
+				$result = false;
 		}
 
 		return true === $result;

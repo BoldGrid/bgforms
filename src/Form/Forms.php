@@ -17,19 +17,36 @@ namespace Boldgrid\Library\Form;
  */
 class Forms {
 	/**
+	 * Forced plugin slug.
+	 *
+	 * @since 1.0.1
+	 *
+	 * @access private
+	 *
+	 * @var string
+	 */
+	private $preferred_slug = '';
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @see \Boldgrid\Library\Form\Forms::get_preferred_slug()
+	 * @see \Boldgrid\Library\Form\Forms::get_ninjaforms_slug()
 	 */
 	public function __construct() {
-	if ( ! $this->get_ninjaforms_slug() ) {
-		$wpforms = new Wpforms();
+		$this->preferred_slug = $this->get_preferred_slug();
 
-		// Add a filter for converting Ninja Forms into WPForms shortcodes.
-		add_filter( 'boldgrid_deployment_pre_insert_post', array(
-			$wpforms, 'convert_nf_shortcodes',
-		) );
-	}
+		// If WPForms is forced, or boldgrid-ninja-forms is not installed, then convert the shortcodes.
+		if ( 'wpforms-lite/wpforms.php' === $this->preferred_slug || ! $this->get_ninjaforms_slug() ) {
+			$wpforms = new Wpforms();
+
+			// Add a filter for converting Ninja Forms into WPForms shortcodes.
+			add_filter( 'boldgrid_deployment_pre_insert_post', array(
+				$wpforms, 'convert_nf_shortcodes',
+			) );
+		}
 	}
 	/**
 	 * Get a plugin slug (folder/file).
@@ -95,12 +112,9 @@ class Forms {
 	 * @return string
 	 */
 	public function get_preferred_slug() {
-		( $slug = $this->get_wpforms_slug() ) ||
-			( $slug = $this->get_ninjaforms_slug() );
+		$slug = $this->get_wpforms_slug() ?: $this->get_ninjaforms_slug();
 
-		$slug = apply_filters( 'boldgrid_form_preferred_slug', $slug );
-
-		return $slug;
+		return apply_filters( 'boldgrid_form_preferred_slug', $slug );
 	}
 
 	/**
@@ -108,43 +122,17 @@ class Forms {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @see \Boldgrid\Library\Form\Forms::get_preferred_slug()
 	 * @see is_plugin_active()
 	 * @see activate_plugin()
 	 *
 	 * @return bool
 	 */
 	public function activate_preferred_plugin() {
-		$preferred_slug = $this->get_preferred_slug();
-
-		if ( ! $preferred_slug ) {
+		if ( ! $this->preferred_slug ) {
 			return false;
 		}
 
-		if ( is_plugin_active( $preferred_slug ) ) {
-			return true;
-		}
-
-		$result = activate_plugin( $preferred_slug );
-
-		if ( is_wp_error( $result ) ) {
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Is there a form plugin installed?
-	 *
-	 * @since 1.0.0
-	 *
-	 * @see \Boldgrid\Library\Form\Forms::get_preferred_slug()
-	 *
-	 * @return bool
-	 */
-	public function has_form_plugin() {
-		return (bool) $this->get_preferred_slug();
+		return ! is_wp_error( activate_plugin( $this->preferred_slug ) );
 	}
 
 	/**
@@ -152,6 +140,7 @@ class Forms {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @see is_plugin_active()
 	 * @see \Boldgrid\Library\Form\Wpforms()
 	 * @see \Boldgrid\Library\Form\Wpforms::install_plugin()
 	 * @see \Boldgrid\Library\Form\Forms::activate_preferred_plugin()
@@ -160,7 +149,9 @@ class Forms {
 	 * @return bool
 	 */
 	public function install() {
-		if ( $this->has_form_plugin() ) {
+		if ( $this->preferred_slug ) {
+			$this->activate_preferred_plugin();
+
 			return false;
 		}
 
@@ -169,7 +160,10 @@ class Forms {
 		$result = $wpforms->install_plugin();
 
 		if ( $result ) {
+			$this->preferred_slug = $this->get_wpforms_slug();
+
 			$result = $this->activate_preferred_plugin();
+
 			$wpforms->import_forms();
 		}
 
