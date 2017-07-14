@@ -112,7 +112,7 @@ class Forms {
 	 * @return string
 	 */
 	public function get_preferred_slug() {
-		$slug = $this->get_wpforms_slug() ?: $this->get_ninjaforms_slug();
+		$slug = $this->get_ninjaforms_slug() ?: $this->get_wpforms_slug();
 
 		return apply_filters( 'boldgrid_form_preferred_slug', $slug );
 	}
