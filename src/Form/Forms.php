@@ -149,7 +149,7 @@ class Forms {
 	 * @return bool
 	 */
 	public function install() {
-		if ( $this->preferred_slug ) {
+		if ( $this->preferred_slug && array_key_exists( $this->preferred_slug, get_plugins() ) ) {
 			$this->activate_preferred_plugin();
 
 			return false;
