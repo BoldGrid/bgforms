@@ -11,7 +11,7 @@ composer require boldgrid/bgforms
 
 ## Changelog ##
 
-### 1.0.1 In progress ###
+### 1.0.1 ###
 * Bug fix:		JIRA WPB-3318	When forcing a preferred form plugin install, first check if plugin is installed before trying to activate.
 * New feature:	JIRA WPB-3312	Added filter for preferred slug.
 
