@@ -12,6 +12,7 @@
 namespace Boldgrid\Library\Form\Wpforms;
 
 use Boldgrid\Library\Library\Filter;
+use Boldgrid\Library\Util\Plugin;
 
 /**
  * BoldGrid Library Form Add New Class.
@@ -42,10 +43,11 @@ class AddNew {
 	 * @return object $plugins The plugins to save update information for.
 	 */
 	public function wpformsData( $plugins ) {
+		$plugins = ( array ) $plugins;
 
 		// Add wpforms to plugins > add new page.
 		if ( $wporgPlugins = get_site_transient( 'boldgrid_wporg_plugins', false ) ) {
-			$plugins = array_merge( ( array ) $plugins, ( array ) $wporgPlugins );
+			$plugins = array_merge( $plugins, ( array ) $wporgPlugins );
 		}
 
 		// Remove boldgrid-ninja-forms if user doesn't already have it.
