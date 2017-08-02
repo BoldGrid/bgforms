@@ -51,7 +51,9 @@ class AddNew {
 		}
 
 		// Remove boldgrid-ninja-forms if user doesn't already have it.
-		if ( ! empty( $plugins['boldgrid-ninja-forms'] ) && empty( Plugin::getPluginFile( 'boldgrid-ninja-forms' ) ) ) {
+		$file = Plugin::getPluginFile( 'boldgrid-ninja-forms' );
+
+		if ( ! empty( $plugins['boldgrid-ninja-forms'] ) && empty( $file ) ) {
 			unset( $plugins['boldgrid-ninja-forms'] );
 		}
 
