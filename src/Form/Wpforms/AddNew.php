@@ -42,8 +42,15 @@ class AddNew {
 	 * @return object $plugins The plugins to save update information for.
 	 */
 	public function wpformsData( $plugins ) {
+
+		// Add wpforms to plugins > add new page.
 		if ( $wporgPlugins = get_site_transient( 'boldgrid_wporg_plugins', false ) ) {
 			$plugins = array_merge( ( array ) $plugins, ( array ) $wporgPlugins );
+		}
+
+		// Remove boldgrid-ninja-forms if user doesn't already have it.
+		if ( ! empty( $plugins['boldgrid-ninja-forms'] ) && empty( Plugin::getPluginFile( 'boldgrid-ninja-forms' ) ) ) {
+			unset( $plugins['boldgrid-ninja-forms'] );
 		}
 
 		return ( object ) $plugins;
