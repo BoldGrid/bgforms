@@ -164,6 +164,8 @@ class Forms {
 
 			$result = $this->activate_preferred_plugin();
 
+			delete_transient( 'wpforms_activation_redirect' );
+
 			$wpforms->import_forms();
 		}
 
