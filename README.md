@@ -11,6 +11,9 @@ composer require boldgrid/bgforms
 
 ## Changelog ##
 
+### 1.1.1 ###
+* Update:       JIRA WPB-3401   Adding affiliate data.
+
 ### 1.1.0 ###
 * Update:       JIRA WPB-3400   Prevent WPForms welcome page.
 
