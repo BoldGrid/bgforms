@@ -80,9 +80,12 @@ class Tracking {
 			$id = defined( 'WPFORMS_SHAREASALE_ID' ) ? WPFORMS_SHAREASALE_ID : get_option( 'wpforms_shareasale_id', '' ) || $this->id;
 
 			// Gets the premium URL.
-			if ( $id && class_exists( 'WPForms_Lite' ) ) {
-				$wpforms = new \WPForms_Lite();
-				$url = $wpforms->upgrade_link();
+			if ( $id ) {
+				$url = esc_url( sprintf(
+					'http://www.shareasale.com/r.cfm?B=837827&U=%1$s&M=64312&urllink=%2$s',
+					$id,
+					$url
+				) );
 			}
 		}
 
