@@ -80,7 +80,7 @@ class Tracking {
 			$id = defined( 'WPFORMS_SHAREASALE_ID' ) ? WPFORMS_SHAREASALE_ID : get_option( 'wpforms_shareasale_id', '' ) || $this->id;
 
 			// Gets the premium URL.
-			if ( $id ) {
+			if ( $id && class_exists( 'WPForms_Lite' ) ) {
 				$wpforms = new \WPForms_Lite();
 				$url = $wpforms->upgrade_link();
 			}

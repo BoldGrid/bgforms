@@ -11,6 +11,9 @@ composer require boldgrid/bgforms
 
 ## Changelog ##
 
+### 1.1.2 ###
+* Bug fix:		JIRA WPB-3401	Fixed fatal when plugin was deleted.
+
 ### 1.1.1 ###
 * Update:       JIRA WPB-3401   Adding affiliate data.
 
