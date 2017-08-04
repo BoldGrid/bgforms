@@ -36,7 +36,7 @@ class Forms {
 	 * @see \Boldgrid\Library\Form\Forms::get_ninjaforms_slug()
 	 */
 	public function __construct() {
-		$this->tracking = new Tracking();
+		$this->tracking = new Wpforms\Tracking();
 		$this->preferred_slug = $this->get_preferred_slug();
 
 		// If WPForms is forced, or boldgrid-ninja-forms is not installed, then convert the shortcodes.
