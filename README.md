@@ -16,7 +16,7 @@ composer require boldgrid/bgforms
 * Update: Updated URL for Wpforms\Tracking to remove class dependency.
 
 ### 1.1.2 ###
-* Bug fix:		JIRA WPB-3401	Fixed fatal when plugin was deleted.
+* Bug fix:      JIRA WPB-3401   Fixed fatal when plugin was deleted.
 
 ### 1.1.1 ###
 * Update:       JIRA WPB-3401   Adding affiliate data.
@@ -25,8 +25,8 @@ composer require boldgrid/bgforms
 * Update:       JIRA WPB-3400   Prevent WPForms welcome page.
 
 ### 1.0.1 ###
-* Bug fix:		JIRA WPB-3318	When forcing a preferred form plugin install, first check if plugin is installed before trying to activate.
-* New feature:	JIRA WPB-3312	Added filter for preferred slug.
+* Bug fix:      JIRA WPB-3318   When forcing a preferred form plugin install, first check if plugin is installed before trying to activate.
+* New feature:  JIRA WPB-3312   Added filter for preferred slug.
 
 ### 1.0.0 ###
 * Initial commit.
