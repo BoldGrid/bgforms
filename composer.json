@@ -33,6 +33,6 @@
         }
     },
     "require": {
-        "boldgrid/library": "^1.0.0"
+        "boldgrid/library": "^2.0.0"
     }
 }
