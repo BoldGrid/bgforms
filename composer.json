@@ -2,7 +2,7 @@
     "name": "boldgrid/bgforms",
     "description": "A composer package for BoldGrid Forms.",
     "type": "library",
-    "license": "GPL2.0",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Joe C",
