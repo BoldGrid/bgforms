@@ -11,9 +11,12 @@ composer require boldgrid/bgforms
 
 ## Changelog ##
 
+### 1.1.4 ###
+* Update:       JIRA WPB-3730   Updated library dependency to ^2.0.0.
+
 ### 1.1.3 ###
 * Bug fix: Fixed improper namespace resolution for Wpforms\Tracking class.
-* Update: Updated URL for Wpforms\Tracking to remove class dependency.
+* Update:  Updated URL for Wpforms\Tracking to remove class dependency.
 
 ### 1.1.2 ###
 * Bug fix:      JIRA WPB-3401   Fixed fatal when plugin was deleted.
