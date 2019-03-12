@@ -11,6 +11,9 @@ composer require boldgrid/bgforms
 
 ## Changelog ##
 
+### 1.1.5 In progress ###
+* Update: Prevent wpforms redirection immediately after Inspirations deployment in all scenarios.
+
 ### 1.1.4 ###
 * Update:       JIRA WPB-3730   Updated library dependency to ^2.0.0.
 

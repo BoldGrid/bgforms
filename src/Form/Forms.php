@@ -150,6 +150,16 @@ class Forms {
 	 * @return bool
 	 */
 	public function install() {
+		/*
+		 * Prevent WPForms redirecting immediately after an Inspirations deployment.
+		 *
+		 * Initially we only did this if the plugin was downloaded and installed, but it should be
+		 * done early on within this method to account for other scenarios.
+		 *
+		 * @link https://plugins.trac.wordpress.org/browser/wpforms-lite/tags/1.5.1.1/includes/admin/class-welcome.php?order=date&desc=1#L59
+		 */
+		delete_transient( 'wpforms_activation_redirect' );
+
 		if ( $this->preferred_slug && array_key_exists( $this->preferred_slug, get_plugins() ) ) {
 			$this->activate_preferred_plugin();
 
@@ -164,8 +174,6 @@ class Forms {
 			$this->preferred_slug = $this->get_wpforms_slug();
 
 			$result = $this->activate_preferred_plugin();
-
-			delete_transient( 'wpforms_activation_redirect' );
 
 			$wpforms->import_forms();
 		}
