@@ -139,8 +139,9 @@ class Forms {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @see self::get_wpforms_slug()
 	 * @see self::get_ninjaforms_slug()
+	 * @see self::get_wpforms_slug()
+	 * @see self::get_weforms_slug()
 	 *
 	 * @return string
 	 */
