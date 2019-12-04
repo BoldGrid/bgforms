@@ -194,9 +194,7 @@ class Forms {
 
 		if ( $result ) {
 			$this->preferred_slug = $this->get_weforms_slug();
-
-			$result = $this->activate_preferred_plugin();
-
+			$result               = $this->activate_preferred_plugin();
 			$weforms->import_forms();
 		}
 
@@ -214,8 +212,19 @@ class Forms {
 	public function check_forms() {
 		if ( $this->get_weforms_slug() ) {
 			$weforms = new WeForms();
-
 			$weforms->import_forms();
+		}
+	}
+
+	/**
+	 * Hide form notices.
+	 *
+	 * @since 1.2.0
+	 */
+	public function hide_notices() {
+		if ( $this->get_weforms_slug() ) {
+			$weforms = new WeForms();
+			$weforms->hide_notices();
 		}
 	}
 }

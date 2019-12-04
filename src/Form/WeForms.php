@@ -1042,4 +1042,39 @@ class WeForms {
 			],
 		];
 	}
+
+	/**
+	 * Hide form notices.
+	 *
+	 * @since 1.2.0
+	 */
+	public function hide_notices() {
+		add_filter(
+			'pre_option_weforms_dismiss_xnotice_wpforms',
+			function() {
+				return 'yes';
+			}
+		);
+
+		add_filter(
+			'pre_option_weforms_promotional_offer_notice',
+			function() {
+				return 'hide';
+			}
+		);
+
+		add_filter(
+			'pre_option_weforms_review_notice_dismiss',
+			function() {
+				return 'yes';
+			}
+		);
+
+		add_filter(
+			'pre_option__transient_weforms_prevent_tracker_notice',
+			function() {
+				return '1';
+			}
+		);
+	}
 }
