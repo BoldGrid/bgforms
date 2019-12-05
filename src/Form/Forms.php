@@ -46,18 +46,11 @@ class Forms {
 		$this->tracking       = new Wpforms\Tracking();
 
 		switch ( true ) {
-			case 'weforms/weforms.php' === $this->preferred_slug:
-				// If weForms is forced, or boldgrid-ninja-forms is not installed, then convert the shortcodes.
-				$weforms = new WeForms();
-
-				// Add a filter for converting Ninja Forms into weForms shortcodes.
-				add_filter( 'boldgrid_deployment_pre_insert_post', [
-					$weforms,
-					'convert_nf_shortcodes',
-				] );
+			case 'ninja-forms' === $this->preferred_slug:
+				// If Ninja Forms is installed, then do not convert the shortcodes.
 				break;
-			case 'wpforms-lite/wpforms.php' === $this->preferred_slug || ! $this->get_ninjaforms_slug():
-				// If WPForms is forced, or boldgrid-ninja-forms is not installed, then convert the shortcodes.
+			case 'wpforms-lite/wpforms.php' === $this->preferred_slug:
+				// If WPForms is preferred, then convert the shortcodes.
 				$wpforms = new Wpforms();
 
 				// Add a filter for converting Ninja Forms into WPForms shortcodes.
@@ -66,7 +59,16 @@ class Forms {
 					'convert_nf_shortcodes',
 				] );
 				break;
+			case 'weforms/weforms.php' === $this->preferred_slug:
 			default:
+				// If weForms is preferred, then convert the shortcodes.
+				$weforms = new WeForms();
+
+				// Add a filter for converting Ninja Forms into weForms shortcodes.
+				add_filter( 'boldgrid_deployment_pre_insert_post', [
+					$weforms,
+					'convert_nf_shortcodes',
+				] );
 				break;
 		}
 	}
