@@ -39,21 +39,17 @@ class Forms {
 	 * @since 1.0.0
 	 *
 	 * @see \Boldgrid\Library\Form\Forms::get_preferred_slug()
-	 * @see \Boldgrid\Library\Form\Forms::get_ninjaforms_slug()
 	 */
 	public function __construct() {
 		$this->preferred_slug = $this->get_preferred_slug();
 		$this->tracking       = new Wpforms\Tracking();
 
 		switch ( true ) {
-			case 'ninja-forms' === $this->preferred_slug:
-				// If Ninja Forms is installed, then do not convert the shortcodes.
-				break;
 			case 'wpforms-lite/wpforms.php' === $this->preferred_slug:
 				// If WPForms is preferred, then convert the shortcodes.
 				$wpforms = new Wpforms();
 
-				// Add a filter for converting Ninja Forms into WPForms shortcodes.
+				// Add a filter for converting shortcodes for use with WPForms.
 				add_filter( 'boldgrid_deployment_pre_insert_post', [
 					$wpforms,
 					'convert_nf_shortcodes',
@@ -64,7 +60,7 @@ class Forms {
 				// If weForms is preferred, then convert the shortcodes.
 				$weforms = new WeForms();
 
-				// Add a filter for converting Ninja Forms into weForms shortcodes.
+				// Add a filter for converting shortcodes for use with weForms.
 				add_filter( 'boldgrid_deployment_pre_insert_post', [
 					$weforms,
 					'convert_nf_shortcodes',
@@ -93,19 +89,6 @@ class Forms {
 		}
 
 		return '';
-	}
-
-	/**
-	 * Get the BoldGrid Ninja Forms slug (folder/file).
-	 *
-	 * @since 1.0.0
-	 *
-	 * @see self::get_plugin_slug()
-	 *
-	 * @return string
-	 */
-	public function get_ninjaforms_slug() {
-		return $this->get_plugin_slug( [ 'BoldGrid Ninja Forms' ] );
 	}
 
 	/**
@@ -141,14 +124,13 @@ class Forms {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @see self::get_ninjaforms_slug()
 	 * @see self::get_wpforms_slug()
 	 * @see self::get_weforms_slug()
 	 *
 	 * @return string
 	 */
 	public function get_preferred_slug() {
-		$slug = $this->get_ninjaforms_slug() ?: $this->get_wpforms_slug() ?: $this->get_weforms_slug();
+		$slug = $this->get_wpforms_slug() ?: $this->get_weforms_slug();
 
 		return apply_filters( 'Boldgrid\Library\Form\Forms\get_preferred_slug', $slug ); // phpcs:ignore WordPress.NamingConventions.ValidHookName
 	}

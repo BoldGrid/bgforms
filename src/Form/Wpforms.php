@@ -281,7 +281,7 @@ class Wpforms {
 	}
 
 	/**
-	 * Convert Ninja Forms shortcodes into WPForms shortcodes for BoldGrid-deployed pages.
+	 * Convert shortcodes for use with WPForms, for BoldGrid-deployed pages.
 	 *
 	 * @since 1.0.0
 	 *

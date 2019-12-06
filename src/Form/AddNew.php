@@ -33,7 +33,6 @@ class AddNew {
 	 * Modify the Library's wp.org saved plugin data.
 	 *
 	 * Add our wporg plugins to the Plugins >> Add New page.
-	 * Remove the old reference to boldgrid-ninja-forms.
 	 *
 	 * @since 1.2.0
 	 *
@@ -48,13 +47,6 @@ class AddNew {
 
 		if ( $wporg_plugins ) {
 			$plugins = array_merge( $plugins, (array) $wporg_plugins );
-		}
-
-		// Remove boldgrid-ninja-forms if user doesn't already have it.
-		$file = Plugin::getPluginFile( 'boldgrid-ninja-forms' );
-
-		if ( ! empty( $plugins['boldgrid-ninja-forms'] ) && empty( $file ) ) {
-			unset( $plugins['boldgrid-ninja-forms'] );
 		}
 
 		return (object) $plugins;

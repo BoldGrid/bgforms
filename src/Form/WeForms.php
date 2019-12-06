@@ -319,7 +319,7 @@ class WeForms {
 	}
 
 	/**
-	 * Convert Ninja Forms shortcodes into weforms shortcodes for BoldGrid-deployed pages.
+	 * Convert shortcodes for use with weforms, for BoldGrid-deployed pages.
 	 *
 	 * @since 1.2.0
 	 *
