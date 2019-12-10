@@ -11,6 +11,9 @@ composer require boldgrid/bgforms
 
 ## Changelog ##
 
+### 1.2.0 ###
+* New feature: Added support for weForms.
+
 ### 1.1.5 ###
 * Update: Prevent wpforms redirection immediately after Inspirations deployment in all scenarios.
 

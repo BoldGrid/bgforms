@@ -267,11 +267,8 @@ class Wpforms {
 		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 		require_once ABSPATH . 'wp-admin/includes/misc.php';
 
-		$upgrader = new \Plugin_Upgrader(
-			new \Plugin_Installer_Skin( compact( 'title', 'url', 'nonce', 'plugin', 'api' ) )
-		);
-
-		$result = $upgrader->install( $this->package_url );
+		$upgrader = new \Plugin_Upgrader( new \Plugin_Installer_Skin() );
+		$result   = $upgrader->install( $this->package_url );
 
 		if ( empty( $upgrader->skin->result ) || is_wp_error( $upgrader->skin->result ) ) {
 				$result = false;
@@ -281,7 +278,7 @@ class Wpforms {
 	}
 
 	/**
-	 * Convert Ninja Forms shortcodes into WPForms shortcodes for BoldGrid-deployed pages.
+	 * Convert shortcodes for use with WPForms, for BoldGrid-deployed pages.
 	 *
 	 * @since 1.0.0
 	 *
