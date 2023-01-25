@@ -11,6 +11,9 @@ composer require boldgrid/bgforms
 
 ## Changelog ##
 
+### 1.2.1 ###
+* Update: Allow weforms shortcodes to have their form id replaced with the imported form id.
+
 ### 1.2.0 ###
 * New feature: Added support for weForms.
 

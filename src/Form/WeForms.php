@@ -278,6 +278,14 @@ class WeForms {
 	public function get_post_id( $id ) {
 		$json = $this->get_form( $id );
 
+		/*
+		 * If the form doesn't exist, we need to return here
+		 * or else the next line below will return accessing property
+		 * on null errors.
+		 */
+		if ( empty( $json ) ) {
+			return false;
+		}
 		$title = esc_html( sanitize_text_field( json_decode( $json )->settings->form_title ) );
 
 		return $this->get_id_by_title( $title );
@@ -327,9 +335,32 @@ class WeForms {
 	 */
 	public function convert_nf_shortcodes( array $post ) {
 		preg_match_all( '/\[ninja_forms id="(\d+)"\]/', $post['post_content'], $matches );
+		if ( empty( $matches[1] ) ) {
+			preg_match_all( '/\[weforms id="(\d+)"\]/', $post['post_content'], $matches );
+		}
 
 		foreach ( $matches[1] as $form_id ) {
 			$post_id = $this->get_post_id( $form_id );
+
+			/*
+			 * If the form_id doesn't exist, then we need to return here
+			 * to prevent replacing a valid shortcode id with an empty string.
+			 */
+			if ( empty( $post_id ) ) {
+				continue;
+			}
+
+			/*
+			 * Using the weforms shortcode as a placeholder
+			 * ensures that weforms will be installed during
+			 * deployment. Therefore we need to ensure that
+			 * those shortcodes are also replaced.
+			 */
+			$post['post_content'] = str_replace(
+				'[weforms id="' . $form_id . '"]',
+				'[weforms id="' . $post_id . '"]',
+				$post['post_content']
+			);
 
 			$post['post_content'] = str_replace(
 				'[ninja_forms id="' . $form_id . '"]',
