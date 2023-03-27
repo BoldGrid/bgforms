@@ -219,7 +219,7 @@ class Wpforms {
 	 */
 	public function get_id_by_title( $title ) {
 		$post_id = null;
-		$post = get_page_by_title( $title, OBJECT, 'wpforms' );
+		$post    = \Boldgrid_Inspirations_Utility::get_page_by_title( $title, OBJECT, 'wpforms' );
 
 		return ! empty( $post->ID ) ? $post->ID : null;
 	}
