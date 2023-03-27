@@ -257,7 +257,7 @@ class WeForms {
 	 */
 	public function get_id_by_title( $title ) {
 		$post_id = null;
-		$post    = Boldgrid_Inspirations_Utility::get_page_by_title( $title, OBJECT, 'wpuf_contact_form' );
+		$post    = \Boldgrid_Inspirations_Utility::get_page_by_title( $title, OBJECT, 'wpuf_contact_form' );
 
 		return ! empty( $post->ID ) ? $post->ID : null;
 	}
