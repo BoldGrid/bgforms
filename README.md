@@ -11,6 +11,9 @@ composer require boldgrid/bgforms
 
 ## Changelog ##
 
+### 1.2.3 ###
+* Update: Fix PHP 8.2 Deprecation notices.
+
 ### 1.2.2 ###
 * Update: Use internal method to get_page_by_title() since WP6.2 deprecated the function.
 
